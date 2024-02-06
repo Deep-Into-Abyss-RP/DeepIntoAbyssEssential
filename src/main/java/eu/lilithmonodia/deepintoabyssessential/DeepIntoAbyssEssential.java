@@ -73,6 +73,7 @@ public final class DeepIntoAbyssEssential extends JavaPlugin {
      * @param command The command executor instance.
      * @param <T>     The type of the command executor.
      */
+    @SuppressWarnings("SameParameterValue")
     private <T extends CommandExecutor & TabCompleter> void registerCommand(String name, T command) {
         PluginCommand pluginCommand = getCommand(name);
         Objects.requireNonNull(pluginCommand).setExecutor(command);
