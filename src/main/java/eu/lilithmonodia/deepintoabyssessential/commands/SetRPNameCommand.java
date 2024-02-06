@@ -14,6 +14,7 @@ import java.util.List;
 
 public class SetRPNameCommand implements CommandExecutor, TabCompleter {
     private final DeepIntoAbyssEssential plugin;
+
     public SetRPNameCommand(DeepIntoAbyssEssential plugin) {
         this.plugin = plugin;
     }
@@ -40,6 +41,7 @@ public class SetRPNameCommand implements CommandExecutor, TabCompleter {
                 completions.add(player.getName());
             }
             return completions;
-        } return List.of();
+        }
+        return List.of();
     }
 }

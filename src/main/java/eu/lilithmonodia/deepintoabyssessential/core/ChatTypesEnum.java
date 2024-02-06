@@ -9,15 +9,14 @@ public enum ChatTypesEnum {
     SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}")),
     LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}")),
     QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}")),
-    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}"));
+    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}")),
+    ACTION(new ChatType("*", 20, "*{rpname} {message}*"));
+
 
     private final ChatType chatType;
+
     ChatTypesEnum(ChatType chatType) {
         this.chatType = chatType;
-    }
-
-    public ChatType getChatType() {
-        return chatType;
     }
 
     public static @Nullable ChatType getChatTypeByPrefix(String prefix) {
@@ -27,5 +26,9 @@ public enum ChatTypesEnum {
             }
         }
         return null;
+    }
+
+    public ChatType getChatType() {
+        return chatType;
     }
 }

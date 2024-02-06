@@ -14,18 +14,20 @@ import java.util.List;
 
 public class ChatHandler implements Listener {
     private static DeepIntoAbyssEssential plugin;
+
     public ChatHandler() {
         ChatHandler.plugin.getServer().getPluginManager().registerEvents(this, ChatHandler.plugin);
     }
 
-    public static void sendMessageByPlayer(@NotNull Player player, ChatType chatType, String message) {
+    public static void sendMessageByPlayer(@NotNull Player player, @NotNull ChatType chatType, String message) {
         Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
         List<Player> playerInDistance = new ArrayList<>();
         final int distance = chatType.getDistance();
         String format = chatType.getFormat();
         if (format.contains("{player}")) format = format.replace("{player}", player.getName());
         if (format.contains("{message}")) format = format.replace("{message}", message);
-        if (format.contains("{rpname}")) format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
+        if (format.contains("{rpname}"))
+            format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
         if (distance == 0) {
             playerInDistance.addAll(List.of(players));
         } else {
@@ -38,6 +40,8 @@ public class ChatHandler implements Listener {
         for (Player p : playerInDistance) {
             p.sendMessage(format);
         }
+
+        plugin.getLogger().info(format);
     }
 
     public static void setPlugin(DeepIntoAbyssEssential plugin) {
@@ -45,13 +49,13 @@ public class ChatHandler implements Listener {
     }
 
     @EventHandler
-    public void onPlayerChat(AsyncChatEvent event) {
+    public void onPlayerChat(@NotNull AsyncChatEvent event) {
         event.setCancelled(true);
         Player player = event.getPlayer();
         String message = event.signedMessage().message();
         ChatType chatType;
 
-        char[] prefixes = "#-+!(:".toCharArray();
+        char[] prefixes = "#-+!(:*".toCharArray();
         for (char prefix : prefixes) {
             if (message.charAt(0) == prefix) {
                 chatType = ChatTypesEnum.getChatTypeByPrefix(String.valueOf(prefix));
