@@ -1,5 +1,5 @@
 name: DeepIntoAbyssEssential
-version: '${version}'
+version: '0.1.0'
 author: Lilith
 main: eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential
 api-version: '1.20'
