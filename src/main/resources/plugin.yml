@@ -1,0 +1,12 @@
+name: DeepIntoAbyssEssential
+version: '${version}'
+author: Lilith
+main: eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential
+api-version: '1.20'
+load: STARTUP
+commands:
+  setrpname:
+    description: A command to set the roleplay name of a player
+    usage: /setrpname <player> <name>
+    permission: DeepIntoAbyssEssential.setrpname
+    permission-message: You don't have <permission>

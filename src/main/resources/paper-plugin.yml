@@ -1,5 +1,0 @@
-name: DeepIntoAbyssEssential
-version: '${version}'
-main: eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential
-api-version: '1.20'
-load: STARTUP
