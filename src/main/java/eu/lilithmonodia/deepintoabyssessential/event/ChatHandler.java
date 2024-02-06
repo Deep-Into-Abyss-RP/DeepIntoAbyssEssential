@@ -4,6 +4,7 @@ import eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,8 +40,9 @@ public class ChatHandler implements Listener {
         List<Player> playerInDistance = new ArrayList<>();
         final int distance = chatType.distance();
         String format = chatType.format();
+        NamedTextColor color = chatType.color();
         if (format.contains("{player}")) format = format.replace("{player}", player.getName());
-        if (format.contains("{message}")) format = format.replace("{message}", message);
+        if (format.contains("{message}")) format = format.replace("{message}",color + message);
         if (format.contains("{rpname}"))
             format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
         if (distance == 0) {

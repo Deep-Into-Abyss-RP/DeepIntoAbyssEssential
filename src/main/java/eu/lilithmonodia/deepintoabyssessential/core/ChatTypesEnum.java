@@ -1,19 +1,20 @@
 package eu.lilithmonodia.deepintoabyssessential.core;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * ChatTypesEnum is an enumeration that represents different types of chat messages in a chat system.
  */
 public enum ChatTypesEnum {
-    HRP(new ChatType("(", 20, "<{rpname}> ({message})")),
-    DEFAULT(new ChatType("", 20, "<{rpname} [Dit]> {message}")),
-    WHISPER(new ChatType("#", 3, "<{rpname} [Chuchote]> {message}")),
-    SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}")),
-    LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}")),
-    QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}")),
-    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}")),
-    ACTION(new ChatType("*", 20, "*{rpname} {message}*"));
+    HRP(new ChatType("(", 20, "<{rpname}> ({message})", NamedTextColor.GRAY)),
+    DEFAULT(new ChatType("", 20, "<{rpname} [Dit]> {message}", NamedTextColor.GREEN)),
+    WHISPER(new ChatType("#", 3, "<{rpname} [Chuchote]> {message}", NamedTextColor.GREEN)),
+    SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}", NamedTextColor.RED)),
+    LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}", NamedTextColor.YELLOW)),
+    QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN)),
+    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE)),
+    ACTION(new ChatType("*", 20, "*{rpname} {message}*", NamedTextColor.GREEN));
 
 
     private final ChatType chatType;
