@@ -12,18 +12,33 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The ChatHandler class handles chat-related events and message sending in the DeepIntoAbyssEssential plugin.
+ * It implements the Listener interface and provides methods for sending chat messages by player.
+ */
 public class ChatHandler implements Listener {
     private static DeepIntoAbyssEssential plugin;
 
+    /**
+     * The ChatHandler class handles chat-related events and message sending in the DeepIntoAbyssEssential plugin.
+     * It implements the Listener interface and provides methods for sending chat messages by player.
+     */
     public ChatHandler() {
         ChatHandler.plugin.getServer().getPluginManager().registerEvents(this, ChatHandler.plugin);
     }
 
+    /**
+     * Sends a message by player using a specified chat type.
+     *
+     * @param player   The player sending the message.
+     * @param chatType The chat type indicating how the message should be formatted and distributed.
+     * @param message  The message to be sent.
+     */
     public static void sendMessageByPlayer(@NotNull Player player, @NotNull ChatType chatType, String message) {
         Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
         List<Player> playerInDistance = new ArrayList<>();
-        final int distance = chatType.getDistance();
-        String format = chatType.getFormat();
+        final int distance = chatType.distance();
+        String format = chatType.format();
         if (format.contains("{player}")) format = format.replace("{player}", player.getName());
         if (format.contains("{message}")) format = format.replace("{message}", message);
         if (format.contains("{rpname}"))
@@ -44,10 +59,22 @@ public class ChatHandler implements Listener {
         plugin.getLogger().info(format);
     }
 
+    /**
+     * Sets the plugin instance for the ChatHandler class.
+     *
+     * @param plugin The DeepIntoAbyssEssential plugin instance.
+     */
     public static void setPlugin(DeepIntoAbyssEssential plugin) {
         ChatHandler.plugin = plugin;
     }
 
+    /**
+     * Handles the player chat event and cancels it.
+     * Parses the message and determines the chat type based on the message prefix.
+     * Sends the formatted message to the appropriate players.
+     *
+     * @param event The AsyncChatEvent representing the player chat event.
+     */
     @EventHandler
     public void onPlayerChat(@NotNull AsyncChatEvent event) {
         event.setCancelled(true);

@@ -10,9 +10,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
+/**
+ * The DeepIntoAbyssEssential class is the main class of the DeepIntoAbyssEssential plugin.
+ * It extends the JavaPlugin class and provides methods for enabling and disabling the plugin,
+ * as well as reloading the configuration and registering commands.
+ */
 public final class DeepIntoAbyssEssential extends JavaPlugin {
     private Configuration configuration;
 
+    /**
+     * Plugin startup logic.
+     * - Saves the default configuration.
+     * - Initializes the configuration from the config file.
+     * - Sets the plugin instance for the ChatHandler class.
+     * - Creates a new instance of the ChatHandler class.
+     * - Registers the "setrpname" command.
+     */
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -26,7 +39,8 @@ public final class DeepIntoAbyssEssential extends JavaPlugin {
     }
 
     /**
-     * Reloads the configuration for this plugin.
+     * Reloads the configuration and updates the configuration object.
+     * This method should be called whenever changes are made to the configuration file.
      */
     public void reload() {
         reloadConfig();
@@ -34,24 +48,30 @@ public final class DeepIntoAbyssEssential extends JavaPlugin {
     }
 
     /**
-     * Returns the current Configuration instance held by the plugin.
+     * Returns the configuration of the plugin.
      *
-     * @return Configuration instance containing world and coordinates data.
+     * @return The configuration object containing the RP names mapping.
      */
     public Configuration getConfiguration() {
         return configuration;
     }
 
+    /**
+     * This method is called when the plugin is being disabled.
+     * It handles the shutdown logic of the plugin.
+     */
     @Override
     public void onDisable() {
         // Plugin shutdown logic
     }
 
     /**
-     * Register a command handler that is both a CommandExecutor and a TabCompleter.
+     * Registers a command with the provided name and command executor.
+     * The command executor must implement both CommandExecutor and TabCompleter interfaces.
      *
-     * @param name    The name of the command to be registered
-     * @param command The command handler, which is both a CommandExecutor and a TabCompleter.
+     * @param name    The name of the command to be registered.
+     * @param command The command executor instance.
+     * @param <T>     The type of the command executor.
      */
     private <T extends CommandExecutor & TabCompleter> void registerCommand(String name, T command) {
         PluginCommand pluginCommand = getCommand(name);
