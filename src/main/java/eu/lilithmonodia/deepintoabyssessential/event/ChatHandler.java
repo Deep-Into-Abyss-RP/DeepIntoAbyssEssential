@@ -37,6 +37,7 @@ public class ChatHandler implements Listener {
      */
     public static void sendMessageByPlayer(@NotNull Player player, @NotNull ChatType chatType, String message) {
         Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
+        Player[] ops = player.getServer().getOperators().toArray(new Player[0]);
         List<Player> playerInDistance = new ArrayList<>();
         final int distance = chatType.distance();
         String format = chatType.format();
@@ -45,8 +46,17 @@ public class ChatHandler implements Listener {
         if (format.contains("{message}")) format = format.replace("{message}",color + message);
         if (format.contains("{rpname}"))
             format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
+        if (chatType.privateChat()) {
+            playerInDistance.addAll(List.of(ops));
+            playerInDistance.add(player);
+        }
         if (distance == 0) {
-            playerInDistance.addAll(List.of(players));
+            if (chatType.privateChat()) {
+                playerInDistance.addAll(List.of(ops));
+                playerInDistance.add(player);
+            } else {
+                playerInDistance.addAll(List.of(players));
+            }
         } else {
             for (Player p : players) {
                 if (p.getLocation().distance(player.getLocation()) <= distance) {

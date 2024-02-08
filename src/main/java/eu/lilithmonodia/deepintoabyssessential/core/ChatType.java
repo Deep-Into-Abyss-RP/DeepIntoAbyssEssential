@@ -9,5 +9,5 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * @param distance The distance at which the chat message can be heard or read.
  * @param format   The format of the chat message.
  */
-public record ChatType(String prefix, int distance, String format, NamedTextColor color) {
+public record ChatType(String prefix, int distance, String format, NamedTextColor color, boolean privateChat) {
 }
