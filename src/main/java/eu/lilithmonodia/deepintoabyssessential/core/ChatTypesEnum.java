@@ -1,6 +1,7 @@
 package eu.lilithmonodia.deepintoabyssessential.core;
 
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -34,13 +35,13 @@ public enum ChatTypesEnum {
      * @param prefix The prefix associated with the chat type.
      * @return The chat type associated with the given prefix, or null if no match is found.
      */
-    public static @Nullable ChatType getChatTypeByPrefix(String prefix) {
+    public static @NotNull ChatType getChatTypeByPrefix(String prefix) {
         for (ChatTypesEnum chatType : ChatTypesEnum.values()) {
             if (chatType.getChatType().prefix().equals(prefix)) {
                 return chatType.getChatType();
             }
         }
-        return null;
+        return ChatTypesEnum.DEFAULT.getChatType();
     }
 
     /**
