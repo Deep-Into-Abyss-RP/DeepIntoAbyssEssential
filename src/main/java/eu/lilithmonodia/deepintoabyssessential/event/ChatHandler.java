@@ -5,6 +5,7 @@ import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,8 +43,9 @@ public class ChatHandler implements Listener {
         final int distance = chatType.distance();
         String format = chatType.format();
         NamedTextColor color = chatType.color();
+        String colorCode = ChatColor.of(color.asHexString()).toString();
         if (format.contains("{player}")) format = format.replace("{player}", player.getName());
-        if (format.contains("{message}")) format = format.replace("{message}",color + message);
+        if (format.contains("{message}")) format = format.replace("{message}", colorCode + message);
         if (format.contains("{rpname}"))
             format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
         if (chatType.privateChat()) {
@@ -68,7 +70,7 @@ public class ChatHandler implements Listener {
             p.sendMessage(format);
         }
 
-        plugin.getLogger().info(format);
+        plugin.getLogger().info(String.format("%s sent a message: %s", player.getName(), message));
     }
 
     /**
@@ -94,7 +96,7 @@ public class ChatHandler implements Listener {
         String message = event.signedMessage().message();
         ChatType chatType;
 
-        char[] prefixes = "#-+!(:*".toCharArray();
+        char[] prefixes = "#-+!(:*$".toCharArray();
         for (char prefix : prefixes) {
             if (message.charAt(0) == prefix) {
                 chatType = ChatTypesEnum.getChatTypeByPrefix(String.valueOf(prefix));
