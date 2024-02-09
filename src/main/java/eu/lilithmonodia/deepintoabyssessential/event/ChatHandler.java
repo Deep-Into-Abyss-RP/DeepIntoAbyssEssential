@@ -82,6 +82,11 @@ public class ChatHandler implements Listener {
         for (String prefix : prefixes) {
             if (message.startsWith(prefix)) {
                 ChatType chatType = ChatTypesEnum.getChatTypeByPrefix(prefix);
+                // Check if message is mJExclusive and player is not an operator
+                if (chatType.mJExclusive() && !player.isOp()) {
+                    player.sendMessage("You do not have permission to send a mJExclusive message.");
+                    return;
+                }
                 sendMessageByPlayer(player, chatType, message.substring(prefix.length()));
                 return;
             }

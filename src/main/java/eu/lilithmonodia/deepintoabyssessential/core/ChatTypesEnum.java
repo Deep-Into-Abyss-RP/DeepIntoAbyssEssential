@@ -7,16 +7,16 @@ import org.jetbrains.annotations.NotNull;
  * ChatTypesEnum is an enumeration that represents different types of chat messages in a chat system.
  */
 public enum ChatTypesEnum {
-    HRP(new ChatType("(", 20, "<{rpname}> ({message})", NamedTextColor.GRAY, false)),
-    DEFAULT(new ChatType("", 20, "<{rpname} [Dit]> {message}", NamedTextColor.GREEN, false)),
-    WHISPER(new ChatType("#", 3, "<{rpname} [Chuchote]> {message}", NamedTextColor.GREEN, true)),
-    SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}", NamedTextColor.RED, false)),
-    LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}", NamedTextColor.YELLOW, false)),
-    QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN, false)),
-    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE, false)),
-    ACTION(new ChatType("*", 20, "*{rpname} {message}*", NamedTextColor.GREEN, false)),
-    STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true)),
-    ENCADREMENT(new ChatType("$$$", 50, "** {message}", NamedTextColor.AQUA, false));
+    HRP(new ChatType("(", 20, "<{rpname}> ({message})", NamedTextColor.GRAY, false, false)),
+    DEFAULT(new ChatType("", 20, "<{rpname} [Dit]> {message}", NamedTextColor.GREEN, false, false)),
+    WHISPER(new ChatType("#", 3, "<{rpname} [Chuchote]> {message}", NamedTextColor.GREEN, true, false)),
+    SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}", NamedTextColor.RED, false, false)),
+    LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}", NamedTextColor.YELLOW, false, false)),
+    QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN, false, false)),
+    GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE, false, false)),
+    ACTION(new ChatType("*", 20, "*{rpname} {message}*", NamedTextColor.GREEN, false, false)),
+    STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true, false)),
+    ENCADREMENT(new ChatType("$$$", 50, "** {message}", NamedTextColor.AQUA, false, true));
 
 
     private final ChatType chatType;

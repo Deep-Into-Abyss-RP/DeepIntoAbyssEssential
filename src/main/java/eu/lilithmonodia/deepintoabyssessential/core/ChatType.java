@@ -10,5 +10,4 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * @param format   The format used to display the chat message.
  * @param color    The color of the chat message.
  */
-public record ChatType(String prefix, int distance, String format, NamedTextColor color, boolean privateChat) {
-}
+public record ChatType(String prefix, int distance, String format, NamedTextColor color, boolean privateChat, boolean mJExclusive) {}
