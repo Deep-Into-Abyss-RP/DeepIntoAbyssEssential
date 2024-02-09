@@ -14,9 +14,17 @@ public enum ChatTypesEnum {
     LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}", NamedTextColor.YELLOW, false, false)),
     QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN, false, false)),
     GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE, false, false)),
-    ACTION(new ChatType("*", 20, "*{rpname} {message}*", NamedTextColor.GREEN, false, false)),
     STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true, false)),
-    ENCADREMENT(new ChatType("$$$", 50, "** {message}", NamedTextColor.AQUA, false, true));
+    WHISPER_ACTION(new ChatType("#*", 3, Constants.ACTION_MESSAGE, NamedTextColor.GREEN, false, false)),
+    CLOSE_ACTION(new ChatType("-*", 5, Constants.ACTION_MESSAGE, NamedTextColor.DARK_GREEN, false, false)),
+    NORMAL_ACTION(new ChatType("*", 20, Constants.ACTION_MESSAGE, NamedTextColor.GREEN, false, false)),
+    FAR_ACTION(new ChatType("+*", 50, Constants.ACTION_MESSAGE, NamedTextColor.YELLOW, false, false)),
+    SHOUT_ACTION(new ChatType("!*", 100, Constants.ACTION_MESSAGE, NamedTextColor.RED, false, false)),
+    WHISPER_ENCADREMENT(new ChatType("#$$$", 3, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
+    CLOSE_ENCADREMENT(new ChatType("-$$$", 5, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
+    NORMAL_ENCADREMENT(new ChatType("$$$", 20, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
+    FAR_ENCADREMENT(new ChatType("+$$$", 50, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
+    SHOUT_ENCADREMENT(new ChatType("!$$$", 100, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true));
 
 
     private final ChatType chatType;
@@ -54,5 +62,10 @@ public enum ChatTypesEnum {
      */
     public ChatType getChatType() {
         return chatType;
+    }
+
+    private static class Constants {
+        public static final String ACTION_MESSAGE = "*{rpname} {message}*";
+        public static final String ENCADREMENT_MESSAGE = "** {message}";
     }
 }
