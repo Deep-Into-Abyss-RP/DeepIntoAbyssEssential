@@ -55,9 +55,9 @@ public class ChatHandler implements Listener {
         String format = replaceFormatParams(chatType.format(), player, colorCodedMessage);
 
         if (chatType.distance() == 0) {
-            playersInReach = chatType.privateChat() ? List.copyOf(ops) :
-                    Stream.of(plugin.getServer().getOnlinePlayers().toArray(Player[]::new))
-                            .toList();
+            playersInReach = chatType.privateChat() ? new ArrayList<>(ops) :
+                    new ArrayList<>(Stream.of(plugin.getServer().getOnlinePlayers().toArray(Player[]::new))
+                            .toList());
             playersInReach.add(player);
         } else {
             for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
