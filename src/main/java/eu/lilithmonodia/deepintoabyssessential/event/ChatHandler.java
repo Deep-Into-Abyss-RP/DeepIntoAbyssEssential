@@ -4,7 +4,6 @@ import eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
