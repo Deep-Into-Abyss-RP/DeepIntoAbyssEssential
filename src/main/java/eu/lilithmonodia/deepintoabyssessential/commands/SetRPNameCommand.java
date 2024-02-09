@@ -36,6 +36,7 @@ public class SetRPNameCommand implements CommandExecutor, TabCompleter {
      * @param command The command that was executed.
      * @param label   The label used for the command.
      * @param args    The arguments provided for the command.
+     *
      * @return true if the command was executed successfully, false otherwise.
      */
     @Override
@@ -55,10 +56,11 @@ public class SetRPNameCommand implements CommandExecutor, TabCompleter {
     /**
      * Retrieves a list of tab completions for the onTabComplete method.
      *
-     * @param sender The command sender.
+     * @param sender  The command sender.
      * @param command The command that was executed.
-     * @param alias The alias used for the command.
-     * @param args The arguments provided for the command.
+     * @param alias   The alias used for the command.
+     * @param args    The arguments provided for the command.
+     *
      * @return A list of tab completions.
      */
     @Override

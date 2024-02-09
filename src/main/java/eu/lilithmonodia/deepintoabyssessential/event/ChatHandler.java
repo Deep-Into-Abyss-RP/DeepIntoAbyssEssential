@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ChatHandler implements Listener {
-    private static DeepIntoAbyssEssential plugin;
     private static final String[] MESSAGE_FORMAT_PARAMS = {"{player}", "{message}", "{rpname}"};
+    private static DeepIntoAbyssEssential plugin;
 
     public ChatHandler(DeepIntoAbyssEssential mainPlugin) {
         ChatHandler.plugin = mainPlugin;

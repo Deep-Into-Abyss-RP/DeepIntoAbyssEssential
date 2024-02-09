@@ -33,6 +33,7 @@ public enum ChatTypesEnum {
      * Retrieves the chat type based on the given prefix.
      *
      * @param prefix The prefix associated with the chat type.
+     *
      * @return The chat type associated with the given prefix, or null if no match is found.
      */
     public static @NotNull ChatType getChatTypeByPrefix(String prefix) {

@@ -17,6 +17,7 @@ public record Configuration(Map<String, String> rpNames) {
      * Retrieves a Configuration object from a FileConfiguration.
      *
      * @param config The FileConfiguration object to retrieve the Configuration from.
+     *
      * @return A new Configuration object with RP names mapping.
      */
     @Contract("_ -> new")
