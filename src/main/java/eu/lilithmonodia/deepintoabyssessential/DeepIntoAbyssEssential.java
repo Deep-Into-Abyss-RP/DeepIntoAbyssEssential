@@ -31,8 +31,7 @@ public final class DeepIntoAbyssEssential extends JavaPlugin {
         // Plugin startup logic
         saveDefaultConfig();
         configuration = Configuration.fromConfig(getConfig());
-        ChatHandler.setPlugin(this);
-        new ChatHandler();
+        new ChatHandler(this);
 
         // Register commands
         registerCommand("setrpname", new SetRPNameCommand(this));

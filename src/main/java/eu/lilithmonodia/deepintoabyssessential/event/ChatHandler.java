@@ -4,8 +4,8 @@ import eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,98 +13,77 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-/**
- * The ChatHandler class handles chat-related events and message sending in the DeepIntoAbyssEssential plugin.
- * It implements the Listener interface and provides methods for sending chat messages by player.
- */
 public class ChatHandler implements Listener {
     private static DeepIntoAbyssEssential plugin;
+    private static final String[] MESSAGE_FORMAT_PARAMS = {"{player}", "{message}", "{rpname}"};
 
-    /**
-     * The ChatHandler class handles chat-related events and message sending in the DeepIntoAbyssEssential plugin.
-     * It implements the Listener interface and provides methods for sending chat messages by player.
-     */
-    public ChatHandler() {
-        ChatHandler.plugin.getServer().getPluginManager().registerEvents(this, ChatHandler.plugin);
+    public ChatHandler(DeepIntoAbyssEssential mainPlugin) {
+        ChatHandler.plugin = mainPlugin;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    /**
-     * Sends a message by player using a specified chat type.
-     *
-     * @param player   The player sending the message.
-     * @param chatType The chat type indicating how the message should be formatted and distributed.
-     * @param message  The message to be sent.
-     */
+    @NotNull
+    private static List<Player> getOnlineOperators() {
+        return plugin.getServer().getOperators().stream()
+                .filter(OfflinePlayer::isOnline)
+                .map(OfflinePlayer::getPlayer)
+                .toList();
+    }
+
+    @NotNull
+    private static String replaceFormatParams(String format, Player player, String colorCodedMessage) {
+        String replacedFormat = format;
+        if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[0]))
+            replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[0], player.getName());
+        if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[1]))
+            replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[1], colorCodedMessage);
+        if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[2]))
+            replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[2],
+                    plugin.getConfiguration().rpNames().get(player.getName()));
+
+        return replacedFormat;
+    }
+
     public static void sendMessageByPlayer(@NotNull Player player, @NotNull ChatType chatType, String message) {
-        Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
-        Player[] ops = player.getServer().getOperators().toArray(new Player[0]);
-        List<Player> playerInDistance = new ArrayList<>();
-        final int distance = chatType.distance();
-        String format = chatType.format();
-        NamedTextColor color = chatType.color();
-        String colorCode = ChatColor.of(color.asHexString()).toString();
-        if (format.contains("{player}")) format = format.replace("{player}", player.getName());
-        if (format.contains("{message}")) format = format.replace("{message}", colorCode + message);
-        if (format.contains("{rpname}"))
-            format = format.replace("{rpname}", plugin.getConfiguration().rpNames().get(player.getName()));
-        if (chatType.privateChat()) {
-            playerInDistance.addAll(List.of(ops));
-            playerInDistance.add(player);
-        }
-        if (distance == 0) {
-            if (chatType.privateChat()) {
-                playerInDistance.addAll(List.of(ops));
-                playerInDistance.add(player);
-            } else {
-                playerInDistance.addAll(List.of(players));
-            }
+        List<Player> ops = getOnlineOperators();
+        List<Player> playersInReach = new ArrayList<>();
+        String colorCodedMessage = ChatColor.of(chatType.color().asHexString()).toString() + message;
+        String format = replaceFormatParams(chatType.format(), player, colorCodedMessage);
+
+        if (chatType.distance() == 0) {
+            playersInReach = chatType.privateChat() ? List.copyOf(ops) :
+                    Stream.of(plugin.getServer().getOnlinePlayers().toArray(Player[]::new))
+                            .toList();
+            playersInReach.add(player);
         } else {
-            for (Player p : players) {
-                if (p.getLocation().distance(player.getLocation()) <= distance) {
-                    playerInDistance.add(p);
+            for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+                if (onlinePlayer.getLocation().distance(player.getLocation()) <= chatType.distance()) {
+                    playersInReach.add(onlinePlayer);
                 }
             }
         }
-        for (Player p : playerInDistance) {
-            p.sendMessage(format);
-        }
+
+        playersInReach.forEach(playerInReach -> playerInReach.sendMessage(format));
 
         plugin.getLogger().info(String.format("%s sent a message: %s", player.getName(), message));
     }
 
-    /**
-     * Sets the plugin instance for the ChatHandler class.
-     *
-     * @param plugin The DeepIntoAbyssEssential plugin instance.
-     */
-    public static void setPlugin(DeepIntoAbyssEssential plugin) {
-        ChatHandler.plugin = plugin;
-    }
-
-    /**
-     * Handles the player chat event and cancels it.
-     * Parses the message and determines the chat type based on the message prefix.
-     * Sends the formatted message to the appropriate players.
-     *
-     * @param event The AsyncChatEvent representing the player chat event.
-     */
     @EventHandler
     public void onPlayerChat(@NotNull AsyncChatEvent event) {
         event.setCancelled(true);
         Player player = event.getPlayer();
         String message = event.signedMessage().message();
-        ChatType chatType;
-
         char[] prefixes = "#-+!(:*$".toCharArray();
+
         for (char prefix : prefixes) {
             if (message.charAt(0) == prefix) {
-                chatType = ChatTypesEnum.getChatTypeByPrefix(String.valueOf(prefix));
+                ChatType chatType = ChatTypesEnum.getChatTypeByPrefix(String.valueOf(prefix));
                 sendMessageByPlayer(player, chatType, message.substring(1));
                 return;
             }
         }
-        chatType = ChatTypesEnum.DEFAULT.getChatType();
-        sendMessageByPlayer(player, chatType, message);
+        sendMessageByPlayer(player, ChatTypesEnum.DEFAULT.getChatType(), message);
     }
 }
