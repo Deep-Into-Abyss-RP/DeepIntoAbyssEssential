@@ -25,8 +25,8 @@ public enum ChatTypesEnum {
     NORMAL_ENCADREMENT(new ChatType("$$$", 20, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
     FAR_ENCADREMENT(new ChatType("+$$$", 50, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
     SHOUT_ENCADREMENT(new ChatType("!$$$", 100, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
-    GLOBAL_ENCADREMENT(new ChatType(":$$$", 0, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true));
-
+    GLOBAL_ENCADREMENT(new ChatType(":$$$", 0, Constants.ENCADREMENT_MESSAGE, NamedTextColor.AQUA, false, true)),
+    PM(new ChatType(">", 0, "{rpname} > {recieverRPName} {message}", NamedTextColor.WHITE, true, false));
 
     private final ChatType chatType;
 
