@@ -4,6 +4,7 @@ import eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -35,7 +36,7 @@ public class ChatHandler implements Listener {
     }
 
     @NotNull
-    private static String replaceFormatParams(String format, Player player, String colorCodedMessage, String receiverRPName) {
+    private static String replaceFormatParams(String format, Player player, String colorCodedMessage) {
         String replacedFormat = format;
         if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[0]))
             replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[0], player.getName());
@@ -44,8 +45,6 @@ public class ChatHandler implements Listener {
         if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[2]))
             replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[2],
                     plugin.getConfiguration().rpNames().get(player.getName()));
-        if (replacedFormat.contains(MESSAGE_FORMAT_PARAMS[3]))
-            replacedFormat = replacedFormat.replace(MESSAGE_FORMAT_PARAMS[3], receiverRPName);
 
         return replacedFormat;
     }
@@ -54,32 +53,7 @@ public class ChatHandler implements Listener {
         List<Player> ops = getOnlineOperators();
         List<Player> playersInReach = new ArrayList<>();
         String colorCodedMessage = ChatColor.of(chatType.color().asHexString()).toString() + message;
-        String format = replaceFormatParams(chatType.format(), player, colorCodedMessage, "");
-        if (message.startsWith(">")) {
-            String[] part = message.split(" ", 3);
-            if (part.length < 3) {
-                player.sendMessage("Invalid message format. Expected '> playerName Message'.");
-                return;
-            }
-
-            String receiverName = part[1];
-            String privateMessage = part[2];
-            Player receiverPlayer = plugin.getServer().getPlayer(receiverName);
-
-            if (receiverPlayer == null) {
-                player.sendMessage("User " + receiverName + " is not online.");
-                return;
-            }
-
-            ChatType privateChatType = ChatTypesEnum.PM.getChatType();
-            String receiverRPName = plugin.getConfiguration().rpNames().get(receiverPlayer.getName());
-
-
-            String privateFormat = replaceFormatParams(privateChatType.format(), player, privateMessage, receiverRPName);
-            player.sendMessage(privateFormat);
-            receiverPlayer.sendMessage(privateFormat);
-            return;
-        }
+        String format = replaceFormatParams(chatType.format(), player, colorCodedMessage);
 
         if (chatType.distance() == 0) {
             playersInReach = chatType.privateChat() ? List.copyOf(ops) :
