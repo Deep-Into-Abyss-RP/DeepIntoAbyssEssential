@@ -15,7 +15,8 @@ public enum ChatTypesEnum {
     QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN, false)),
     GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE, false)),
     ACTION(new ChatType("*", 20, "*{rpname} {message}*", NamedTextColor.GREEN, false)),
-    STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true));
+    STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true)),
+    ENCADREMENT(new ChatType("$$$", 50, "** {message}", NamedTextColor.AQUA, false));
 
 
     private final ChatType chatType;

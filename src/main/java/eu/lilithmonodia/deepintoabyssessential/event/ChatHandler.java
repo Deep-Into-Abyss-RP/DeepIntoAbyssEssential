@@ -12,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -75,12 +77,12 @@ public class ChatHandler implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
         String message = event.signedMessage().message();
-        char[] prefixes = "#-+!(:*$".toCharArray();
+        List<String> prefixes = Arrays.stream(ChatTypesEnum.values()).map(chatType -> chatType.getChatType().prefix()).sorted(Comparator.comparing(String::length).reversed()).toList();
 
-        for (char prefix : prefixes) {
-            if (message.charAt(0) == prefix) {
-                ChatType chatType = ChatTypesEnum.getChatTypeByPrefix(String.valueOf(prefix));
-                sendMessageByPlayer(player, chatType, message.substring(1));
+        for (String prefix : prefixes) {
+            if (message.startsWith(prefix)) {
+                ChatType chatType = ChatTypesEnum.getChatTypeByPrefix(prefix);
+                sendMessageByPlayer(player, chatType, message.substring(prefix.length()));
                 return;
             }
         }
