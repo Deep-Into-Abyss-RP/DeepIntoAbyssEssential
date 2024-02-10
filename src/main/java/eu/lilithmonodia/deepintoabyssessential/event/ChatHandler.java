@@ -4,7 +4,6 @@ import eu.lilithmonodia.deepintoabyssessential.DeepIntoAbyssEssential;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatType;
 import eu.lilithmonodia.deepintoabyssessential.core.ChatTypesEnum;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +50,7 @@ public class ChatHandler implements Listener {
     public static void sendMessageByPlayer(@NotNull Player player, @NotNull ChatType chatType, String message) {
         List<Player> ops = getOnlineOperators();
         List<Player> playersInReach = new ArrayList<>();
-        String colorCodedMessage = ChatColor.of(chatType.color().asHexString()).toString() + message;
+        String colorCodedMessage = chatType.color() + message;
         String format = replaceFormatParams(chatType.format(), player, colorCodedMessage);
 
         if (chatType.distance() == 0) {
@@ -84,7 +83,7 @@ public class ChatHandler implements Listener {
                 ChatType chatType = ChatTypesEnum.getChatTypeByPrefix(prefix);
                 // Check if message is mJExclusive and player is not an operator
                 if (chatType.mJExclusive() && !player.isOp()) {
-                    player.sendMessage("You do not have permission to send a mJExclusive message.");
+                    player.sendMessage("Vous n'avez pas la permission d'utiliser ce type de message.");
                     return;
                 }
                 sendMessageByPlayer(player, chatType, message.substring(prefix.length()));

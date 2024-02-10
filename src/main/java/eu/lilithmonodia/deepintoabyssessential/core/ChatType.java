@@ -1,7 +1,5 @@
 package eu.lilithmonodia.deepintoabyssessential.core;
 
-import net.kyori.adventure.text.format.NamedTextColor;
-
 /**
  * ChatType is a record class representing different types of chat messages in a chat system.
  *
@@ -10,4 +8,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * @param format   The format used to display the chat message.
  * @param color    The color of the chat message.
  */
-public record ChatType(String prefix, int distance, String format, NamedTextColor color, boolean privateChat, boolean mJExclusive) {}
+public record ChatType(String prefix, int distance, String format, String color, boolean privateChat,
+                       boolean mJExclusive) {
+}
