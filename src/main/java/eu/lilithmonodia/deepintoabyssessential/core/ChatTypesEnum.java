@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * ChatTypesEnum is an enumeration that represents different types of chat messages in a chat system.
  */
 public enum ChatTypesEnum {
-    HRP(new ChatType("(", 20, "<{rpname}> ({message})", Constants.GRAY, false, false)),
+    HRP(new ChatType("(", 20, "<{rpname}> " + Constants.GRAY + "({message})", Constants.GRAY, false, false)),
     DEFAULT(new ChatType("", 20, Constants.RPNAME_INDICATOR + Constants.GREEN + "Dit" + Constants.WHITE + Constants.CHAT_MESSAGE_FORMAT, Constants.GREEN, false, false)),
     WHISPER(new ChatType("#", 3, Constants.RPNAME_INDICATOR + Constants.DARK_AQUA + "Chuchote" + Constants.WHITE + Constants.CHAT_MESSAGE_FORMAT, Constants.DARK_AQUA, true, false)),
     SHOUT(new ChatType("!", 100, Constants.RPNAME_INDICATOR + Constants.RED + "Crie" + Constants.WHITE + Constants.CHAT_MESSAGE_FORMAT, Constants.RED, false, false)),
@@ -76,7 +76,7 @@ public enum ChatTypesEnum {
         public static final String AQUA = getColor(NamedTextColor.AQUA);
         public static final String WHITE = getColor(NamedTextColor.WHITE);
 
-        public static final String ACTION_MESSAGE = "*{rpname} {message}*";
+        public static final String ACTION_MESSAGE = "*{rpname} {message}" + WHITE + "*";
         public static final String ENCADREMENT_MESSAGE = AQUA + "** {message}";
         public static final String RPNAME_INDICATOR = "<{rpname} [";
         public static final String CHAT_MESSAGE_FORMAT = "]> {message}";
