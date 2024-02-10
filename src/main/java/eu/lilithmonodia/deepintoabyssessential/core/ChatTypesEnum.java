@@ -1,6 +1,7 @@
 package eu.lilithmonodia.deepintoabyssessential.core;
 
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -8,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum ChatTypesEnum {
     HRP(new ChatType("(", 20, "<{rpname}> ({message})", NamedTextColor.GRAY, false, false)),
-    DEFAULT(new ChatType("", 20, "<{rpname} [Dit]> {message}", NamedTextColor.GREEN, false, false)),
-    WHISPER(new ChatType("#", 3, "<{rpname} [Chuchote]> {message}", NamedTextColor.GREEN, true, false)),
-    SHOUT(new ChatType("!", 100, "<{rpname} [Crie]> {message}", NamedTextColor.RED, false, false)),
-    LOUD(new ChatType("+", 50, "<{rpname} [Dit fort]> {message}", NamedTextColor.YELLOW, false, false)),
-    QUIET(new ChatType("-", 10, "<{rpname} [Dit bas]> {message}", NamedTextColor.DARK_GREEN, false, false)),
+    DEFAULT(new ChatType("", 20, Constants.RPNAME_INDICATOR + Constants.GREEN + "Dit" + Constants.WHITE + "]> {message}", NamedTextColor.GREEN, false, false)),
+    WHISPER(new ChatType("#", 3, Constants.RPNAME_INDICATOR + Constants.DARK_AQUA + "Chuchote" + Constants.WHITE + "]> {message}", NamedTextColor.DARK_AQUA, true, false)),
+    SHOUT(new ChatType("!", 100, Constants.RPNAME_INDICATOR + Constants.RED + "Crie" + Constants.WHITE + "]> {message}", NamedTextColor.RED, false, false)),
+    LOUD(new ChatType("+", 50, Constants.RPNAME_INDICATOR + Constants.YELLOW + "Dit fort" + Constants.WHITE + "]> {message}", NamedTextColor.YELLOW, false, false)),
+    QUIET(new ChatType("-", 10, Constants.RPNAME_INDICATOR + Constants.DARK_GREEN + "Dit bas" + Constants.WHITE + "]> {message}", NamedTextColor.DARK_GREEN, false, false)),
     GLOBAL(new ChatType(":", 0, "<{rpname}> {message}", NamedTextColor.WHITE, false, false)),
-    STAFF(new ChatType("$", 0, "<{rpname} [Staff]> {message}", NamedTextColor.DARK_PURPLE, true, false)),
+    STAFF(new ChatType("$", 0, "<{rpname}> {message}", NamedTextColor.DARK_PURPLE, true, false)),
     WHISPER_ACTION(new ChatType("#*", 3, Constants.ACTION_MESSAGE, NamedTextColor.GREEN, false, false)),
     CLOSE_ACTION(new ChatType("-*", 5, Constants.ACTION_MESSAGE, NamedTextColor.DARK_GREEN, false, false)),
     NORMAL_ACTION(new ChatType("*", 20, Constants.ACTION_MESSAGE, NamedTextColor.GREEN, false, false)),
@@ -65,7 +66,15 @@ public enum ChatTypesEnum {
     }
 
     private static class Constants {
+        public static final String DARK_AQUA = ChatColor.of(NamedTextColor.DARK_AQUA.asHexString()).toString();
+        public static final String DARK_GREEN = ChatColor.of(NamedTextColor.DARK_GREEN.asHexString()).toString();
+        public static final String GREEN = ChatColor.of(NamedTextColor.GREEN.asHexString()).toString();
+        public static final String YELLOW = ChatColor.of(NamedTextColor.YELLOW.asHexString()).toString();
+        public static final String RED = ChatColor.of(NamedTextColor.RED.asHexString()).toString();
+        public static final String WHITE = ChatColor.of(NamedTextColor.WHITE.asHexString()).toString();
+
         public static final String ACTION_MESSAGE = "*{rpname} {message}*";
-        public static final String ENCADREMENT_MESSAGE = "** {message}";
+        public static final String ENCADREMENT_MESSAGE = ChatColor.of(NamedTextColor.AQUA.asHexString()).toString() + "** {message}";
+        public static final String RPNAME_INDICATOR = "<{rpname} [";
     }
 }
